@@ -1,0 +1,2 @@
+pgsql2shp -f "trimmed.shp" -u pat gis "select * from gis where geom && ST_MakeEnvelope(-122.215,47.78, -122.275,47.725, 4326);"
+
