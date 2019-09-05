@@ -2,22 +2,24 @@
 Translation rules
 Copyright 2019
 """
+#import str
+
 def translateName(rawname):
     '''
     A general purpose name expander.
     '''
     suffixlookup = {
-    'Ave':'Avenue',
-    'Rd':'Road',
-    'St':'Street',
-    'Pl':'Place',
-    'Cres':'Crescent',
-    'Blvd':'Boulevard',
-    'Dr':'Drive',
-    'Lane':'Lane',
-    'Crt':'Court',
-    'Gr':'Grove',
-    'Cl':'Close',
+    'AVE':'Avenue',
+    'RD':'Road',
+    'ST':'Street',
+    'PL':'Place',
+    'CRES':'Crescent',
+    'BLVD':'Boulevard',
+    'DR':'Drive',
+    'LANE':'Lane',
+    'CRT':'Court',
+    'GR':'Grove',
+    'CL':'Close',
     'Rwy':'Railway',
     'Div':'Diversion',
     'Hwy':'Highway',
@@ -34,8 +36,8 @@ def translateName(rawname):
 
     newName = ''
     for partName in rawname.split():
-        newName = newName + ' ' + suffixlookup.get(partName,partName)
-    
+	    newName = newName + ' ' + str.capitalize(suffixlookup.get(partName,partName))
+    newName = newName.lstrip()
     return newName
 
 def filterTags(attrs):
@@ -48,9 +50,9 @@ def filterTags(attrs):
     if 'UNIT' in attrs and attrs['UNIT'] != '':
         tags['addr:unit'] = attrs['UNIT']
     if 'FULLNAME' in attrs and attrs['FULLNAME'] != '':
-        tags['addr:street'] = attrs['FULLNAME']
+        tags['addr:street'] = translateName(attrs['FULLNAME'])
     if 'CTYNAME' in attrs and attrs['CTYNAME'] != '':
-        tags['addr:city'] = attrs['CTYNAME']
+        tags['addr:city'] = str.capitalize(attrs['CTYNAME'])
     if 'ZIP5' in attrs and attrs['ZIP5'] != '':
         tags['addr:postcode'] = attrs['ZIP5']
 
